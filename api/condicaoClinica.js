@@ -1,5 +1,5 @@
 module.exports = app => {
-    const get = app.get('/concicaoClinica', (req,res)=>{
+    const get = app.get('/condicaoClinica', (req,res)=>{
         mysqlConnection.query('select * from concicaoClinica', (err, rows, fields)=>{
             if(!err)
                 res.send(rows)
@@ -9,7 +9,7 @@ module.exports = app => {
     })
     
     //pegar concicaoClinica
-    const getu = app.get('/concicaoClinica/:id', (req,res)=>{
+    const getu = app.get('/condicaoClinica/:id', (req,res)=>{
         mysqlConnection.query('select * from concicaoClinica where pac_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
@@ -19,7 +19,7 @@ module.exports = app => {
     })
     
     //deletar concicaoClinica
-    const del = app.delete('/concicaoClinica/:id', (req,res)=>{
+    const del = app.delete('/condicaoClinica/:id', (req,res)=>{
         mysqlConnection.query('delete from concicaoClinica where pac_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
@@ -29,7 +29,7 @@ module.exports = app => {
     })
 
     //adicionar concicaoClinica
-    const add = app.post('/concicaoClinica', (req,res)=>{
+    const add = app.post('/condicaoClinica', (req,res)=>{
         //console.log({...req.body})
         let ccli = req.body;
         var sql = "SET @ccli_id = ?; SET @ccli_nome = ?;\
@@ -47,7 +47,7 @@ module.exports = app => {
 
     
     //atualizar concicaoClinica
-    const att = app.put('/concicaoClinica', (req,res)=>{
+    const att = app.put('/condicaoClinica', (req,res)=>{
         let ccli = req.body;
         var sql = "SET @ccli_id = ?; SET @ccli_nome = ?;\
                    CALL ConcicaoClinicaAddOrEdit(@ccli_id , @ccli_nome);";

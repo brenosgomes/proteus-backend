@@ -4,6 +4,6 @@ module.exports = mysqlConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: '',
+    database: 'proteusbackend',
     multipleStatements: true
 })

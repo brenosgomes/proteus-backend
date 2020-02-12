@@ -69,12 +69,12 @@ module.exports = app => {
       .post(app.api.exameFisico.add)
       .put(app.api.exameFisico.att)
 
-   app.route('/concicaoClinica')
-      .get(app.api.concicaoClinica.get)  
-      .get(app.api.concicaoClinica.getu) 
-      .delete(app.api.concicaoClinica.del) 
-      .post(app.api.concicaoClinica.add)
-      .put(app.api.concicaoClinica.att)
+   app.route('/condicaoClinica')
+      .get(app.api.condicaoClinica.get)  
+      .get(app.api.condicaoClinica.getu) 
+      .delete(app.api.condicaoClinica.del) 
+      .post(app.api.condicaoClinica.add)
+      .put(app.api.condicaoClinica.att)
 
    app.route('/EfisVmed')
       .get(app.api.EfisVmed.get)  

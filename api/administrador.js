@@ -85,6 +85,8 @@ module.exports = app =>{
         })
         
                 
-    return {get, getu, del, add, att}
+        
     })
+    return {get, getu, del, add, att}
+
 }

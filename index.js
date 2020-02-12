@@ -1,16 +1,15 @@
 const express = require('express');
 const consign = require('consign');
 var app = express();
+app.db = require("./config/bd");
 
 consign()
     .include('./config/passport.js')
     .then('./config/middleware.js')
     .then('./api/validator.js')
-    .then('./config/bd.js')
-    .then('./api/auth.js')
-    .then('./config')
+    .then('./api/config')
     .then('./api')
-
+    .then('./config/routes.js')
     .into(app)
 
 mysqlConnection.connect((err)=>{

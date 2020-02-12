@@ -1,6 +1,6 @@
 module.exports = app => {
     const get = app.get('/vpaciente', (req,res)=>{
-        mysqlConnection.query('select * from vpaciente', (err, rows, fields)=>{
+        mysqlConnection.query('select * from versaopaciente', (err, rows, fields)=>{
             if(!err)
                 res.send(rows)
             else
@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar versão paciente
     const getu = app.get('/vpaciente/:id', (req,res)=>{
-        mysqlConnection.query('select * from vpaciente where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from versaopaciente where pac_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar versão paciente
     const del = app.delete('/vpaciente/:id', (req,res)=>{
-        mysqlConnection.query('delete from vpaciente where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from versaopaciente where pac_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -35,7 +35,7 @@ module.exports = app => {
         var sql = "SET @vpac_id = ?; SET @vpac_fk_ava = ?; SET @vpac_q1_pes_atu = ?; SET @vpac_q1_tam = ?; SET @vpac_q1_pes_mes = ?; SET @vpac_q1_pes_smst = ?;\
                    SET @vpac_q2_qtd = ?; SET @vpac_q2_tip = ?;SET @vpac_q3_dor = ?; SET @vpac_q3_out = ?; SET @vpac_quad1 = ?;\
                    SET @vpac_quad2 = ?; SET @vpac_quad3 = ?;SET @vpac_quad4 = ?;\
-                   CALL VPacienteAddOrEdit(@vpac_id, @vpac_fk_ava,@vpac_q1_pes_atu, @vpac_q1_tam, @vpac_q1_pes_mes, @vpac_q1_pes_smst,\
+                   CALL VersaoPacienteAddOrEdit(@vpac_id, @vpac_fk_ava,@vpac_q1_pes_atu, @vpac_q1_tam, @vpac_q1_pes_mes, @vpac_q1_pes_smst,\
                                            @vpac_q2_qtd, @vpac_q2_tip, @vpac_q3_dor, @vpac_q3_out, @vpac_quad1,\
                                            @vpac_quad2, @vpac_quad3, @vpac_quad4);";
         mysqlConnection.query(sql, [vpac.vpac_id, vpac.vpac_fk_ava,vpac.vpac_q1_pes_atu, vpac.vpac_q1_tam, vpac.vpac_q1_pes_mes, vpac.vpac_q1_pes_smst,
@@ -58,7 +58,7 @@ module.exports = app => {
         var sql = "SET @vpac_id = ?; SET @vpac_fk_ava = ?; SET @vpac_q1_pes_atu = ?; SET @vpac_q1_tam = ?; SET @vpac_q1_pes_mes = ?; SET @vpac_q1_pes_smst = ?;\
                    SET @vpac_q2_qtd = ?; SET @vpac_q2_tip = ?;SET @vpac_q3_dor = ?; SET @vpac_q3_out = ?; SET @vpac_quad1 = ?;\
                    SET @vpac_quad2 = ?; SET @vpac_quad3 = ?;SET @vpac_quad4 = ?;\
-                   CALL VPacienteAddOrEdit(@vpac_id, @vpac_fk_ava,@vpac_q1_pes_atu, @vpac_q1_tam, @vpac_q1_pes_mes, @vpac_q1_pes_smst,\
+                   CALL VersaoPacienteAddOrEdit(@vpac_id, @vpac_fk_ava,@vpac_q1_pes_atu, @vpac_q1_tam, @vpac_q1_pes_mes, @vpac_q1_pes_smst,\
                                            @vpac_q2_qtd, @vpac_q2_tip, @vpac_q3_dor, @vpac_q3_out, @vpac_quad1,\
                                            @vpac_quad2, @vpac_quad3, @vpac_quad4);";
         mysqlConnection.query(sql, [vpac.vpac_id, vpac.vpac_fk_ava,vpac.vpac_q1_pes_atu, vpac.vpac_q1_tam, vpac.vpac_q1_pes_mes, vpac.vpac_q1_pes_smst,

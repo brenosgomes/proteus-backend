@@ -34,9 +34,8 @@ module.exports = app => {
         let pac = req.body;
         var sql = "SET @pac_id = ?; SET @pac_nome = ?;SET @pac_dt_nasc = ?; SET @pac_tel = ?;\
                    SET @pac_email = ?; SET @pac_rg = ?;SET @pac_cpf = ?;SET @pac_pro = ?;\
-                   CALL PacienteAddOrEdit(@pac_id, @pac_fk_adm, @pac_nome, @pac_dt_nasc, @pac_email, @pac_rg,\
-                                          @pac_cpf, @pac_num, @pac_rua ,@pac_bairro, @pac_cid, @pac_est,\
-                                          @pac_pes_atual, @pes_pes_sem, @pac_pes_mes, @pac_alt);";
+                   CALL PacienteAddOrEdit(@pac_id, @pac_nome, @pac_dt_nasc, @pac_tel,\
+                                          @pac_email, @pac_rg, @pac_cpf ,@pac_pro);";
         mysqlConnection.query(sql, [pac.pac_id, pac.pac_nome, pac.pac_dt_nasc, pac.pac_tel,
                                     pac.pac_email, pac.pac_rg, pac.pac_cpf, pac.pac_pro] ,(err, rows, fields)=>{
             if(!err)
@@ -55,9 +54,8 @@ module.exports = app => {
         let pac = req.body;
         var sql = "SET @pac_id = ?; SET @pac_nome = ?;SET @pac_dt_nasc = ?; SET @pac_tel = ?;\
                    SET @pac_email = ?; SET @pac_rg = ?;SET @pac_cpf = ?;SET @pac_pro = ?;\
-                   CALL PacienteAddOrEdit(@pac_id, @pac_fk_adm, @pac_nome, @pac_dt_nasc, @pac_email, @pac_rg,\
-                                          @pac_cpf, @pac_num, @pac_rua ,@pac_bairro, @pac_cid, @pac_est,\
-                                          @pac_pes_atual, @pes_pes_sem, @pac_pes_mes, @pac_alt);";
+                   CALL PacienteAddOrEdit(@pac_id, @pac_nome, @pac_dt_nasc, @pac_tel,\
+                                          @pac_email, @pac_rg, @pac_cpf ,@pac_pro);";
         mysqlConnection.query(sql, [pac.pac_id, pac.pac_nome, pac.pac_dt_nasc, pac.pac_tel,
                                     pac.pac_email, pac.pac_rg, pac.pac_cpf, pac.pac_pro] ,(err, rows, fields)=>{
             if(!err)

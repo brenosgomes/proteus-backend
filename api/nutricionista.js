@@ -30,7 +30,7 @@ module.exports = app => {
 
     //adicionar nutricionista
     const add = app.post('/nutricionista', (req,res)=>{
-        //console.log({...req.body})
+        console.log({...req.body})
         let nut = req.body;
         var sql = "SET @nut_id = ?; SET @nut_nome = ?;SET @nut_crn = ?;\
                    CALL NutricionistaAddOrEdit(@nut_id, @nut_nome, @nut_crn);";
