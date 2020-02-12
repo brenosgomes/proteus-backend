@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar SinVpac
     const getu = app.get('/SinVpac/:id', (req,res)=>{
-        mysqlConnection.query('select * from SinVpac where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from SinVpac where sinvpac_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar SinVpac
     const del = app.delete('/SinVpac/:id', (req,res)=>{
-        mysqlConnection.query('delete from SinVpac where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from SinVpac where sinvpac_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,9 +32,10 @@ module.exports = app => {
     const add = app.post('/SinVpac', (req,res)=>{
         //console.log({...req.body})
         let sinvpac = req.body;
-        var sql = "SET @sinvpac_fk_vpac  = ?; SET @sinvpac_fk_sin   = ?;\
-                   CALL SinVpacAddOrEdit(@sinvpac_fk_vpac , @sinvpac_fk_sin  );";
-        mysqlConnection.query(sql, [sinvpac.sinvpac_fk_vpac, sinvpac.sinvpac_fk_sin  ] ,(err, rows, fields)=>{
+        if (sinvpac.sinvpac_id == null) sinvpac.sinvpac_id = 0
+        var sql = "SET @sinvpac_id = ?;SET @sinvpac_fk_vpac  = ?; SET @sinvpac_fk_sin   = ?;\
+                   CALL SinVpacAddOrEdit(@sinvpac_id, @sinvpac_fk_vpac , @sinvpac_fk_sin  );";
+        mysqlConnection.query(sql, [sinvpac.sinvpac_id, sinvpac.sinvpac_fk_vpac, sinvpac.sinvpac_fk_sin  ] ,(err, rows, fields)=>{
             if(!err)
                 rows.forEach(element => {
                     if(element.constructor == Array)
@@ -49,9 +50,9 @@ module.exports = app => {
     //atualizar SinVpac
     const att = app.put('/SinVpac', (req,res)=>{
         let sinvpac = req.body;
-        var sql = "SET @sinvpac_fk_vpac  = ?; SET @sinvpac_fk_sin   = ?;\
-                   CALL SinVpacAddOrEdit(@sinvpac_fk_vpac , @sinvpac_fk_sin  );";
-        mysqlConnection.query(sql, [sinvpac.sinvpac_fk_vpac, sinvpac.sinvpac_fk_sin  ] ,(err, rows, fields)=>{
+        var sql = "SET @sinvpac_id = ?;SET @sinvpac_fk_vpac  = ?; SET @sinvpac_fk_sin   = ?;\
+                   CALL SinVpacAddOrEdit(@sinvpac_id, @sinvpac_fk_vpac , @sinvpac_fk_sin  );";
+        mysqlConnection.query(sql, [sinvpac.sinvpac_id, sinvpac.sinvpac_fk_vpac, sinvpac.sinvpac_fk_sin  ] ,(err, rows, fields)=>{
             if(!err)
                 res.send('Atualização bem sucedida')
             else

@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar avaliacao
     const getu = app.get('/avaliacao/:id', (req,res)=>{
-        mysqlConnection.query('select * from avaliacao where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from avaliacao where ava_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar avaliacao
     const del = app.delete('/avaliacao/:id', (req,res)=>{
-        mysqlConnection.query('delete from avaliacao where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from avaliacao where ava_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,6 +32,7 @@ module.exports = app => {
     const add = app.post('/avaliacao', (req,res)=>{
         //console.log({...req.body})
         let ava = req.body;
+        if (ava.ava_id == null) ava.ava_id = 0
         var sql = "SET @ava_id = ?; SET @ava_fk_pac = ?; SET @ava_fk_nut = ?; SET @ava_sit = ?;SET @ava_con = ?; SET @ava_ris_nut = ?; SET @ava_t = ?;\
                    SET @ava_m = ?; SET @ava_n = ?;SET @ava_g = ?; SET @ava_dat_pac = ?; SET @ava_dat_med = ?;\
                    SET @ava_aco = ?; SET @ava_diag = ?;SET @ava_tra = ?; SET @ava_ale = ?; SET @ava_atvd_fis = ?;\

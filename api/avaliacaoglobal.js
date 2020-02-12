@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar avaliacao global
     const getu = app.get('/avaliacaog/:id', (req,res)=>{
-        mysqlConnection.query('select * from avaliacaog where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from avaliacaog where avag_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar avaliacao global
     const del = app.delete('/avaliacaog/:id', (req,res)=>{
-        mysqlConnection.query('delete from avaliacaog where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from avaliacaog where avag_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,6 +32,7 @@ module.exports = app => {
     const add = app.post('/avaliacaog', (req,res)=>{
         //console.log({...req.body})
         let avag = req.body;
+        if (avag.avag_id == null) avag.avag_id = 0
         var sql = "SET @avag_id = ?; SET @avag_fk_vmed  = ?; SET @avag_pes = ?; SET @avag_nut = ?; SET @avag_imp_nut = ?; SET @avag_fun = ?;  SET @avag_exa_fis = ?;\
                    CALL AvaliacaoGAddOrEdit(@avag_id, @avag_fk_vmed, @avag_pes, @avag_nut, @avag_imp_nut, @avag_fun, @avag_exa_fis);";
         mysqlConnection.query(sql, [avag.avag_id, avag.avag_fk_vmed ,avag.avag_pes, avag.avag_nut, avag.avag_imp_nut, avag.avag_fun, avag.avag_exa_fis] ,(err, rows, fields)=>{

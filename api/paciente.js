@@ -32,6 +32,7 @@ module.exports = app => {
     const add = app.post('/paciente', (req,res)=>{
         //console.log({...req.body})
         let pac = req.body;
+        if (pac.pac_id == null) pac.pac_id = 0
         var sql = "SET @pac_id = ?; SET @pac_nome = ?;SET @pac_dt_nasc = ?; SET @pac_tel = ?;\
                    SET @pac_email = ?; SET @pac_rg = ?;SET @pac_cpf = ?;SET @pac_pro = ?;\
                    CALL PacienteAddOrEdit(@pac_id, @pac_nome, @pac_dt_nasc, @pac_tel,\

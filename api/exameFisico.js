@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar exameFisico
     const getu = app.get('/exameFisico/:id', (req,res)=>{
-        mysqlConnection.query('select * from exameFisico where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from exameFisico where efis_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar exameFisico
     const del = app.delete('/exameFisico/:id', (req,res)=>{
-        mysqlConnection.query('delete from exameFisico where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from exameFisico where efis_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,6 +32,7 @@ module.exports = app => {
     const add = app.post('/exameFisico', (req,res)=>{
         //console.log({...req.body})
         let efis = req.body;
+        if (efis.efis_id == null) efis.efis_id = 0
         var sql = "SET @efis_id  = ?; SET @efis_nome  = ?;\
                    CALL ExameFisicoAddOrEdit(@efis_id  , @efis_nome );";
         mysqlConnection.query(sql, [efis.efis_id , efis.efis_nome ] ,(err, rows, fields)=>{

@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar antropometria
     const getu = app.get('/antropometria/:id', (req,res)=>{
-        mysqlConnection.query('select * from antropometria where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from antropometria where ant_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar antropometria
     const del = app.delete('/antropometria/:id', (req,res)=>{
-        mysqlConnection.query('delete from antropometria where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from antropometria where ant_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,6 +32,7 @@ module.exports = app => {
     const add = app.post('/antropometria', (req,res)=>{
         //console.log({...req.body})
         let ant = req.body;
+        if (ant.ant_id == null) ant.ant_id = 0
         var sql = "SET @ant_id = ?; SET @ant_fk_ava = ? ;SET @ant_alt = ?;SET @ant_pes_usu = ?; SET @ant_pes_atu = ?;\
                    SET @ant_des_pes_atu = ?; SET @ant_des_pp = ?;SET @ant_din = ?;SET @ant_cir_pan = ?;\
                    SET @ant_ambc = ?; SET @ant_cabd = ?;SET @ant_pp = ?;SET @ant_imc = ?;\

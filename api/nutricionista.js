@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar nutricionista
     const getu = app.get('/nutricionista/:id', (req,res)=>{
-        mysqlConnection.query('select * from nutricionista where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from nutricionista where nut_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar nutricionista
     const del = app.delete('/nutricionista/:id', (req,res)=>{
-        mysqlConnection.query('delete from nutricionista where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from nutricionista where nut_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,6 +32,7 @@ module.exports = app => {
     const add = app.post('/nutricionista', (req,res)=>{
         console.log({...req.body})
         let nut = req.body;
+        if (nut.nut_id == null) nut.nut_id = 0
         var sql = "SET @nut_id = ?; SET @nut_nome = ?;SET @nut_crn = ?;\
                    CALL NutricionistaAddOrEdit(@nut_id, @nut_nome, @nut_crn);";
         mysqlConnection.query(sql, [nut.nut_id, nut.nut_nome, nut.nut_crn] ,(err, rows, fields)=>{

@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar CcliVmed
     const getu = app.get('/CcliVmed/:id', (req,res)=>{
-        mysqlConnection.query('select * from CcliVmed where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from CcliVmed where cclivmed_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar CcliVmed
     const del = app.delete('/CcliVmed/:id', (req,res)=>{
-        mysqlConnection.query('delete from CcliVmed where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from CcliVmed where cclivmed_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,9 +32,10 @@ module.exports = app => {
     const add = app.post('/CcliVmed', (req,res)=>{
         //console.log({...req.body})
         let cclivmed = req.body;
-        var sql = "SET @cclivmed_fk_vmed = ?; SET @cclivmed_fk_ccli  = ?;\
-                   CALL CcliVmedAddOrEdit(@cclivmed_fk_vmed, @cclivmed_fk_ccli );";
-        mysqlConnection.query(sql, [cclivmed.cclivmed_fk_vmed, cclivmed.cclivmed_fk_ccli ] ,(err, rows, fields)=>{
+        if (cclivmed.cclivmed_id == null) cclivmed.cclivmed_id = 0
+        var sql = "SET @cclivmed_id = ?; SET @cclivmed_fk_vmed = ?; SET @cclivmed_fk_ccli  = ?;\
+                   CALL CcliVmedAddOrEdit(@cclivmed_id, @cclivmed_fk_vmed, @cclivmed_fk_ccli);";
+        mysqlConnection.query(sql, [cclivmed.cclivmed_id, cclivmed.cclivmed_fk_vmed, cclivmed.cclivmed_fk_ccli ] ,(err, rows, fields)=>{
             if(!err)
                 rows.forEach(element => {
                     if(element.constructor == Array)
@@ -49,9 +50,9 @@ module.exports = app => {
     //atualizar CcliVmed
     const att = app.put('/CcliVmed', (req,res)=>{
         let cclivmed = req.body;
-        var sql = "SET @cclivmed_fk_vmed = ?; SET @cclivmed_fk_ccli  = ?;\
-                   CALL CcliVmedAddOrEdit(@cclivmed_fk_vmed, @cclivmed_fk_ccli );";
-        mysqlConnection.query(sql, [cclivmed.cclivmed_fk_vmed, cclivmed.cclivmed_fk_ccli ] ,(err, rows, fields)=>{
+        var sql = "SET @cclivmed_id = ?; SET @cclivmed_fk_vmed = ?; SET @cclivmed_fk_ccli  = ?;\
+                   CALL CcliVmedAddOrEdit(@cclivmed_id, @cclivmed_fk_vmed, @cclivmed_fk_ccli);";
+        mysqlConnection.query(sql, [cclivmed.cclivmed_id, cclivmed.cclivmed_fk_vmed, cclivmed.cclivmed_fk_ccli ] ,(err, rows, fields)=>{
             if(!err)
                 res.send('Atualização bem sucedida')
             else

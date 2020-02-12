@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar versão paciente
     const getu = app.get('/vpaciente/:id', (req,res)=>{
-        mysqlConnection.query('select * from versaopaciente where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from versaopaciente where vpac_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar versão paciente
     const del = app.delete('/vpaciente/:id', (req,res)=>{
-        mysqlConnection.query('delete from versaopaciente where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from versaopaciente where vpac_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,6 +32,7 @@ module.exports = app => {
     const add = app.post('/vpaciente', (req,res)=>{
         //console.log({...req.body})
         let vpac = req.body;
+        if (vpac.vpac_id == null) vpac.vpac_id = 0
         var sql = "SET @vpac_id = ?; SET @vpac_fk_ava = ?; SET @vpac_q1_pes_atu = ?; SET @vpac_q1_tam = ?; SET @vpac_q1_pes_mes = ?; SET @vpac_q1_pes_smst = ?;\
                    SET @vpac_q2_qtd = ?; SET @vpac_q2_tip = ?;SET @vpac_q3_dor = ?; SET @vpac_q3_out = ?; SET @vpac_quad1 = ?;\
                    SET @vpac_quad2 = ?; SET @vpac_quad3 = ?;SET @vpac_quad4 = ?;\

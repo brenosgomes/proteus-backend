@@ -10,7 +10,7 @@ module.exports = app => {
     
     //pegar sintomas
     const getu = app.get('/sintomas/:id', (req,res)=>{
-        mysqlConnection.query('select * from sintomas where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('select * from sintomas where sin_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -20,7 +20,7 @@ module.exports = app => {
     
     //deletar sintomas
     const del = app.delete('/sintomas/:id', (req,res)=>{
-        mysqlConnection.query('delete from sintomas where pac_id = ?', [req.params.id],(err, rows, fields)=>{
+        mysqlConnection.query('delete from sintomas where sin_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -32,6 +32,7 @@ module.exports = app => {
     const add = app.post('/sintomas', (req,res)=>{
         //console.log({...req.body})
         let sin = req.body;
+        if (sin.sin_id == null) sin.sin_id = 0
         var sql = "SET @sin_id = ?; SET @sin_nome = ?;\
                    CALL SintomasAddOrEdit(@sin_id , @sin_nome);";
         mysqlConnection.query(sql, [sin.sin_id, sin.sin_nome] ,(err, rows, fields)=>{

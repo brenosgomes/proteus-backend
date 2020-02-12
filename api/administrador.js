@@ -55,6 +55,7 @@ module.exports = app =>{
     const add =app.post ('/administrador', async (req,res)=>{
         //console.log({...req.body})
         const adm = req.body;
+        if (adm.adm_id == null) adm.adm_id = 0
         const sql = "SET @adm_id = ?; SET @adm_login = ?;SET @adm_senha = ?;\
                      CALL AdministradorAddOrEdit(@adm_id, @adm_login, @adm_senha);";
         try{
@@ -64,7 +65,7 @@ module.exports = app =>{
             equalsOrError(adm.adm_senha, adm.confirmarsenha, 'Senhas não conferem')
 
             const admFromDB = await app.config.bd ('administrador')
-                .where({ adm_login: adm.adm_login}).first()
+                .where({adm_login: adm.adm_login}).first()
             if(!adm_id)
                 notExistsOrError(admFromDB, 'Usuario já cadastrado')
         } catch(msg) {
