@@ -39,7 +39,7 @@ module.exports = app => {
             if(!err)
                 rows.forEach(element => {
                     if(element.constructor == Array)
-                    res.send('Sintoma adicionado id : ' +element[0].nut_id);
+                    res.send('Sintoma adicionado id : ' +element[0].sin_id);
                 });
             else
                 console.log(err)

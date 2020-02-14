@@ -30,13 +30,13 @@ module.exports = app => {
 
     //adicionar versão paciente
     const add = app.post('/vpaciente', (req,res)=>{
-        //console.log({...req.body})
+        console.log({...req.body})
         let vpac = req.body;
         if (vpac.vpac_id == null) vpac.vpac_id = 0
         var sql = "SET @vpac_id = ?; SET @vpac_fk_ava = ?; SET @vpac_q1_pes_atu = ?; SET @vpac_q1_tam = ?; SET @vpac_q1_pes_mes = ?; SET @vpac_q1_pes_smst = ?;\
                    SET @vpac_q2_qtd = ?; SET @vpac_q2_tip = ?;SET @vpac_q3_dor = ?; SET @vpac_q3_out = ?; SET @vpac_quad1 = ?;\
                    SET @vpac_quad2 = ?; SET @vpac_quad3 = ?;SET @vpac_quad4 = ?;\
-                   CALL VersaoPacienteAddOrEdit(@vpac_id, @vpac_fk_ava,@vpac_q1_pes_atu, @vpac_q1_tam, @vpac_q1_pes_mes, @vpac_q1_pes_smst,\
+                   CALL VersaoPacienteAddOrEdit(@vpac_id, @vpac_fk_ava, @vpac_q1_pes_atu, @vpac_q1_tam, @vpac_q1_pes_mes, @vpac_q1_pes_smst,\
                                            @vpac_q2_qtd, @vpac_q2_tip, @vpac_q3_dor, @vpac_q3_out, @vpac_quad1,\
                                            @vpac_quad2, @vpac_quad3, @vpac_quad4);";
         mysqlConnection.query(sql, [vpac.vpac_id, vpac.vpac_fk_ava,vpac.vpac_q1_pes_atu, vpac.vpac_q1_tam, vpac.vpac_q1_pes_mes, vpac.vpac_q1_pes_smst,

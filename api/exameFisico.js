@@ -1,6 +1,6 @@
 module.exports = app => {
-    const get = app.get('/exameFisico', (req,res)=>{
-        mysqlConnection.query('select * from exameFisico', (err, rows, fields)=>{
+    const get = app.get('/examefisico', (req,res)=>{
+        mysqlConnection.query('select * from examefisico', (err, rows, fields)=>{
             if(!err)
                 res.send(rows)
             else
@@ -9,8 +9,8 @@ module.exports = app => {
     })
     
     //pegar exameFisico
-    const getu = app.get('/exameFisico/:id', (req,res)=>{
-        mysqlConnection.query('select * from exameFisico where efis_id = ?', [req.params.id],(err, rows, fields)=>{
+    const getu = app.get('/examefisico/:id', (req,res)=>{
+        mysqlConnection.query('select * from examefisico where efis_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -19,8 +19,8 @@ module.exports = app => {
     })
     
     //deletar exameFisico
-    const del = app.delete('/exameFisico/:id', (req,res)=>{
-        mysqlConnection.query('delete from exameFisico where efis_id = ?', [req.params.id],(err, rows, fields)=>{
+    const del = app.delete('/examefisico/:id', (req,res)=>{
+        mysqlConnection.query('delete from examefisico where efis_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -29,7 +29,7 @@ module.exports = app => {
     })
 
     //adicionar exameFisico
-    const add = app.post('/exameFisico', (req,res)=>{
+    const add = app.post('/examefisico', (req,res)=>{
         //console.log({...req.body})
         let efis = req.body;
         if (efis.efis_id == null) efis.efis_id = 0
@@ -39,7 +39,7 @@ module.exports = app => {
             if(!err)
                 rows.forEach(element => {
                     if(element.constructor == Array)
-                    res.send('Exame fisico adicionado id : ' +element[0].nut_id);
+                    res.send('Exame fisico adicionado id : ' +element[0].efis_id);
                 });
             else
                 console.log(err)
@@ -48,7 +48,7 @@ module.exports = app => {
 
     
     //atualizar exameFisico
-    const att = app.put('/exameFisico', (req,res)=>{
+    const att = app.put('/examefisico', (req,res)=>{
         let efis = req.body;
         var sql = "SET @efis_id  = ?; SET @efis_nome  = ?;\
                    CALL ExameFisicoAddOrEdit(@efis_id  , @efis_nome );";

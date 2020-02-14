@@ -1,6 +1,6 @@
 module.exports = app => {
-    const get = app.get('/CcliVmed', (req,res)=>{
-        mysqlConnection.query('select * from CcliVmed', (err, rows, fields)=>{
+    const get = app.get('/cclivmed', (req,res)=>{
+        mysqlConnection.query('select * from cclivmed', (err, rows, fields)=>{
             if(!err)
                 res.send(rows)
             else
@@ -9,8 +9,8 @@ module.exports = app => {
     })
     
     //pegar CcliVmed
-    const getu = app.get('/CcliVmed/:id', (req,res)=>{
-        mysqlConnection.query('select * from CcliVmed where cclivmed_id = ?', [req.params.id],(err, rows, fields)=>{
+    const getu = app.get('/cclivmed/:id', (req,res)=>{
+        mysqlConnection.query('select * from cclivmed where cclivmed_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -19,8 +19,8 @@ module.exports = app => {
     })
     
     //deletar CcliVmed
-    const del = app.delete('/CcliVmed/:id', (req,res)=>{
-        mysqlConnection.query('delete from CcliVmed where cclivmed_id = ?', [req.params.id],(err, rows, fields)=>{
+    const del = app.delete('/cclivmed/:id', (req,res)=>{
+        mysqlConnection.query('delete from cclivmed where cclivmed_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -29,17 +29,17 @@ module.exports = app => {
     })
 
     //adicionar CcliVmed
-    const add = app.post('/CcliVmed', (req,res)=>{
+    const add = app.post('/cclivmed', (req,res)=>{
         //console.log({...req.body})
         let cclivmed = req.body;
         if (cclivmed.cclivmed_id == null) cclivmed.cclivmed_id = 0
-        var sql = "SET @cclivmed_id = ?; SET @cclivmed_fk_vmed = ?; SET @cclivmed_fk_ccli  = ?;\
+        var sql = "SET @cclivmed_id = ?; SET @cclivmed_fk_vmed = ?; SET @cclivmed_fk_ccli = ?;\
                    CALL CcliVmedAddOrEdit(@cclivmed_id, @cclivmed_fk_vmed, @cclivmed_fk_ccli);";
         mysqlConnection.query(sql, [cclivmed.cclivmed_id, cclivmed.cclivmed_fk_vmed, cclivmed.cclivmed_fk_ccli ] ,(err, rows, fields)=>{
             if(!err)
                 rows.forEach(element => {
                     if(element.constructor == Array)
-                    res.send('CcliVmed adicionado id : ' +element[0].nut_id);
+                    res.send('CcliVmed adicionado id : ' +element[0].cclivmed_id);
                 });
             else
                 console.log(err)
@@ -48,9 +48,9 @@ module.exports = app => {
 
     
     //atualizar CcliVmed
-    const att = app.put('/CcliVmed', (req,res)=>{
+    const att = app.put('/cclivmed', (req,res)=>{
         let cclivmed = req.body;
-        var sql = "SET @cclivmed_id = ?; SET @cclivmed_fk_vmed = ?; SET @cclivmed_fk_ccli  = ?;\
+        var sql = "SET @cclivmed_id = ?; SET @cclivmed_fk_vmed = ?; SET @cclivmed_fk_ccli = ?;\
                    CALL CcliVmedAddOrEdit(@cclivmed_id, @cclivmed_fk_vmed, @cclivmed_fk_ccli);";
         mysqlConnection.query(sql, [cclivmed.cclivmed_id, cclivmed.cclivmed_fk_vmed, cclivmed.cclivmed_fk_ccli ] ,(err, rows, fields)=>{
             if(!err)

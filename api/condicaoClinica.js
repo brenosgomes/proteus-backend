@@ -1,6 +1,6 @@
 module.exports = app => {
-    const get = app.get('/condicaoClinica', (req,res)=>{
-        mysqlConnection.query('select * from concicaoClinica', (err, rows, fields)=>{
+    const get = app.get('/condicaoclinica', (req,res)=>{
+        mysqlConnection.query('select * from condicaoclinica', (err, rows, fields)=>{
             if(!err)
                 res.send(rows)
             else
@@ -9,8 +9,8 @@ module.exports = app => {
     })
     
     //pegar concicaoClinica
-    const getu = app.get('/condicaoClinica/:id', (req,res)=>{
-        mysqlConnection.query('select * from concicaoClinica where ccli_id = ?', [req.params.id],(err, rows, fields)=>{
+    const getu = app.get('/condicaoclinica/:id', (req,res)=>{
+        mysqlConnection.query('select * from condicaoclinica where ccli_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send(rows);
             else
@@ -19,8 +19,8 @@ module.exports = app => {
     })
     
     //deletar concicaoClinica
-    const del = app.delete('/condicaoClinica/:id', (req,res)=>{
-        mysqlConnection.query('delete from concicaoClinica where ccli_id = ?', [req.params.id],(err, rows, fields)=>{
+    const del = app.delete('/condicaoclinica/:id', (req,res)=>{
+        mysqlConnection.query('delete from condicaoclinica where ccli_id = ?', [req.params.id],(err, rows, fields)=>{
             if(!err)
                 res.send('delete bem sucedido');
             else
@@ -29,17 +29,17 @@ module.exports = app => {
     })
 
     //adicionar concicaoClinica
-    const add = app.post('/condicaoClinica', (req,res)=>{
+    const add = app.post('/condicaoclinica', (req,res)=>{
         //console.log({...req.body})
         let ccli = req.body;
         if (ccli.ccli_id == null) ccli.ccli_id = 0
         var sql = "SET @ccli_id = ?; SET @ccli_nome = ?;\
-                   CALL ConcicaoClinicaAddOrEdit(@ccli_id , @ccli_nome);";
+                   CALL CondicaoClinicaAddOrEdit(@ccli_id , @ccli_nome);";
         mysqlConnection.query(sql, [ccli.ccli_id, ccli.ccli_nome] ,(err, rows, fields)=>{
             if(!err)
                 rows.forEach(element => {
                     if(element.constructor == Array)
-                    res.send('Sintoma adicionado id : ' +element[0].nut_id);
+                    res.send('Sintoma adicionado id : ' +element[0].ccli_id);
                 });
             else
                 console.log(err)
@@ -48,10 +48,10 @@ module.exports = app => {
 
     
     //atualizar concicaoClinica
-    const att = app.put('/condicaoClinica', (req,res)=>{
+    const att = app.put('/condicaoclinica', (req,res)=>{
         let ccli = req.body;
         var sql = "SET @ccli_id = ?; SET @ccli_nome = ?;\
-                   CALL ConcicaoClinicaAddOrEdit(@ccli_id , @ccli_nome);";
+                   CALL CondicaoClinicaAddOrEdit(@ccli_id , @ccli_nome);";
         mysqlConnection.query(sql, [ccli.ccli_id, ccli.ccli_nome] ,(err, rows, fields)=>{
             if(!err)
                 res.send('Atualização bem sucedida')
